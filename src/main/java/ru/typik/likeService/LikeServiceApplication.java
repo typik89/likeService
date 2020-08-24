@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
+import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoClient;
 
 @SpringBootApplication
@@ -14,7 +15,9 @@ public class LikeServiceApplication {
     MongoClient mongoClient;
 
     public MongoTemplate mongoTemplate() {
-        return new MongoTemplate(this.mongoClient, "likeService");
+        MongoTemplate mt = new MongoTemplate(this.mongoClient, "likeService");
+        mt.setWriteConcern(WriteConcern.MAJORITY);
+        return mt;
     }
 
     public static void main(String[] args) {
